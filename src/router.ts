@@ -8,8 +8,38 @@ export const router = () => {
 
   r.get('/stream', (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      res.send('TODO: Implement streaming endpoint\n');
+      const timeout = req.query.timeout ? Number(req.query.timeout) : 30;
+
+      // Watch mode: stream newline-delimited JSON events (like K8s)
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Transfer-Encoding', 'chunked');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+
+      // Send initial ADDED event
+      const sendEvent = (type: string, object: object) => {
+        res.write(JSON.stringify({ type, object }) + '\n');
+      };
+
+      sendEvent('ADDED', { now: new Date().toISOString() });
+
+      // Send MODIFIED events periodically
+      const interval = setInterval(() => {
+        sendEvent('MODIFIED', { now: new Date().toISOString() });
+      }, 1000);
+
+      // Clean up on timeout
+      const timeoutId = setTimeout(() => {
+        sendEvent('DELETED', { now: new Date().toISOString() });
+        clearInterval(interval);
+        res.end();
+      }, timeout * 1000);
+
+      // Clean up if client disconnects
+      req.on('close', () => {
+        clearInterval(interval);
+        clearTimeout(timeoutId);
+      });
     } catch (error) {
       next(error);
     }
