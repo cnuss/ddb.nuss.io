@@ -1,10 +1,11 @@
 {
   "name": "rowdy.nuss.io",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:cnuss/rowdy.nuss.io.git",
   "author": "Christian Nuss <https://github.com/cnuss>",
-  "license": "FSL-1.1-ALv2",
+  "license": "MIT",
   "scripts": {
     "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
     "build": "tsup",
@@ -32,7 +33,6 @@
   "devDependencies": {
     "@types/accepts": "^1.3.7",
     "@types/express": "^5.0.6",
-    "@types/handlebars": "^4.1.0",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.0.6",
