@@ -1,8 +1,8 @@
 {
-  "name": "ddb.nuss.io",
+  "name": "rowdy.nuss.io",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:cnuss/ddb.nuss.io.git",
+  "repository": "git@github.com:cnuss/rowdy.nuss.io.git",
   "author": "Christian Nuss <https://github.com/cnuss>",
   "license": "FSL-1.1-ALv2",
   "scripts": {

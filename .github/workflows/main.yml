@@ -148,7 +148,7 @@ jobs:
         with:
           cloud: aws
           compute: lambda
-          name: ddb.nuss.io
+          name: rowdy.nuss.io
           image: ghcr.io/${{ github.repository }}:latest
           memory: 512
           routes: ./routes.yaml
